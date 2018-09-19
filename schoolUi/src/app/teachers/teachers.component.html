@@ -1,0 +1,71 @@
+<form #teacherForm="ngForm">
+
+<div
+	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+	<h1 class="h2">Teachers</h1>
+	
+</div>
+<div class="form-group row">
+	<label for="exampleInputEmail1" class="col-sm-2 col-form-label">Name</label>
+	<div class="col-sm-5">
+		<input [(ngModel)]="teacher.name" placeholder="name"
+			class="form-control" name="name"  #name="ngModel" required minlength="4">
+	</div>
+
+	<div class="col-sm-5" *ngIf="name.invalid && (name.dirty || name.touched)">
+
+		<div *ngIf="name.errors.required">
+		 <p class="text-danger"> Name is required.</p>
+		</div>
+		<div *ngIf="name.errors.minlength">
+		<p class="text-danger"> Name must be at least 4 characters long.</p> 
+		</div>
+		
+	  
+	</div>
+</div>
+<div class="form-group row">
+	<label for="exampleInputPassword1" class="col-sm-2 col-form-label">
+		Age</label>
+	<div class="col-sm-5">
+		<input [(ngModel)]="teacher.age" placeholder="Age"
+			class="form-control"  name="age">
+	</div>
+</div>
+<div class="form-group row">
+	<label for="exampleInputPassword1" class="col-sm-2 col-form-label">Sex</label>
+	<div class="col-sm-5">
+		<input [(ngModel)]="teacher.sex" placeholder="Sex"
+			class="form-control"  name="sex">
+	</div>
+</div>
+
+
+<button class="btn btn-primary" (click)="saveTeachers()" [disabled]="!teacherForm.form.valid">Submit</button>
+<button class="btn btn-primary"  *ngIf="teacher.id"  (click)="initData()">Clear</button>
+</form>
+<table class="table table-striped" style="margin-top: 30px;">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Name</th>
+			<th scope="col">Age</th>
+			<th scope="col">Sex</th>
+			<th scope="col">Edit</th>
+			<th scope="col">Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let st of teachers;let i = index" [attr.data-index]="i">
+			<th scope="row">{{i+1}}</th>
+			<td>{{st.name}}</td>
+			<td>{{st.age}}</td>
+			<td>{{st.sex}}</td>
+			<td><a class="fa fa-pencil"  (click)="editTeacher(st)"></a></td>
+			<td><a class="fa fa-trash"  (click)="deleteTeacher(st)"></a></td>
+		</tr>
+
+	</tbody>
+</table>
+
+
